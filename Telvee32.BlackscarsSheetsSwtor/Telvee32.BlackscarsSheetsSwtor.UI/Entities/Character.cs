@@ -19,5 +19,15 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Entities
 
         [ForeignKey("SkillId")]
         public Skill Skill { get; set; }
+
+        public int AgeYears { get; set; }
+
+        public string Species { get; set; }
+
+        public int Perception => 1 + 1;
+
+        public int Initiative => 1 + 1;
+
+        public Rank Rank { get; set; }
     }
 }
