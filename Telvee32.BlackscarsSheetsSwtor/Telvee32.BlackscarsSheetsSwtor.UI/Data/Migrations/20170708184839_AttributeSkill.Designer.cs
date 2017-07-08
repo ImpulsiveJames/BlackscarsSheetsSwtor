@@ -8,9 +8,10 @@ using Telvee32.BlackscarsSheetsSwtor.UI.Data;
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170708184839_AttributeSkill")]
+    partial class AttributeSkill
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -132,6 +133,8 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 
                     b.Property<int>("Dexterity");
 
+                    b.Property<Guid?>("FK_Attributes_Characters_Id");
+
                     b.Property<int>("Intelligence");
 
                     b.Property<int>("Stamina");
@@ -144,6 +147,9 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FK_Attributes_Characters_Id")
+                        .IsUnique();
+
                     b.ToTable("Attributes");
                 });
 
@@ -152,23 +158,13 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AttributeId");
-
                     b.Property<string>("Name");
 
                     b.Property<string>("Nickname");
 
-                    b.Property<int?>("SkillId");
-
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AttributeId")
-                        .IsUnique();
-
-                    b.HasIndex("SkillId")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -185,6 +181,8 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                     b.Property<int>("Athletics");
 
                     b.Property<int>("Brawling");
+
+                    b.Property<Guid?>("FK_Skills_Characters_Id");
 
                     b.Property<int>("Firearms");
 
@@ -211,6 +209,9 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                     b.Property<int>("Weaponry");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FK_Skills_Characters_Id")
+                        .IsUnique();
 
                     b.ToTable("Skills");
                 });
@@ -302,19 +303,25 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Attribute", b =>
+                {
+                    b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", "Character")
+                        .WithOne("Attribute")
+                        .HasForeignKey("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Attribute", "FK_Attributes_Characters_Id");
+                });
+
             modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", b =>
                 {
-                    b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Attribute", "Attribute")
-                        .WithOne("Character")
-                        .HasForeignKey("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", "AttributeId");
-
-                    b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Skill", "Skill")
-                        .WithOne("Character")
-                        .HasForeignKey("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", "SkillId");
-
                     b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Models.ApplicationUser", "User")
                         .WithMany("Characters")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Skill", b =>
+                {
+                    b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", "Character")
+                        .WithOne("Skill")
+                        .HasForeignKey("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Skill", "FK_Skills_Characters_Id");
                 });
         }
     }
