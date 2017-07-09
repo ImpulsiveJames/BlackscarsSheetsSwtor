@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Telvee32.BlackscarsSheetsSwtor.UI.Entities;
 using Telvee32.BlackscarsSheetsSwtor.UI.Models;
 
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Data
@@ -14,6 +11,12 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data
             : base(options)
         {
         }
+
+        public DbSet<Character> Characters { get; set; }
+
+        public DbSet<Attribute> Attributes { get; set; }
+
+        public DbSet<Skill> Skills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

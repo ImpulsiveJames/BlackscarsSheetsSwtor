@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Telvee32.BlackscarsSheetsSwtor.UI.Data;
-using Telvee32.BlackscarsSheetsSwtor.UI.Models;
 
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170708182709_CharacterUserFKv2")]
+    partial class CharacterUserFKv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -124,102 +124,20 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Attribute", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Charisma");
-
-                    b.Property<int>("Dexterity");
-
-                    b.Property<int>("Intelligence");
-
-                    b.Property<int>("Stamina");
-
-                    b.Property<int>("Strength");
-
-                    b.Property<int>("Willpower");
-
-                    b.Property<int>("Wits");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Attributes");
-                });
-
             modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AgeYears");
-
-                    b.Property<int?>("AttributeId");
-
                     b.Property<string>("Name");
-
-                    b.Property<string>("Nickname");
-
-                    b.Property<int>("Rank");
-
-                    b.Property<int?>("SkillId");
-
-                    b.Property<string>("Species");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttributeId")
-                        .IsUnique();
-
-                    b.HasIndex("SkillId")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Characters");
-                });
-
-            modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AnimalKen");
-
-                    b.Property<int>("Athletics");
-
-                    b.Property<int>("Brawling");
-
-                    b.Property<int>("Firearms");
-
-                    b.Property<int>("HeavyOrdnance");
-
-                    b.Property<int>("Interrogation");
-
-                    b.Property<int>("Larceny");
-
-                    b.Property<int>("Mechanics");
-
-                    b.Property<int>("Medicine");
-
-                    b.Property<int>("Persuasion");
-
-                    b.Property<int>("Piloting");
-
-                    b.Property<int>("Slicing");
-
-                    b.Property<int>("Stealth");
-
-                    b.Property<int>("Survival");
-
-                    b.Property<int>("Weaponry");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skills");
+                    b.ToTable("Character");
                 });
 
             modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Models.ApplicationUser", b =>
@@ -311,14 +229,6 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 
             modelBuilder.Entity("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", b =>
                 {
-                    b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Attribute", "Attribute")
-                        .WithOne("Character")
-                        .HasForeignKey("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", "AttributeId");
-
-                    b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Skill", "Skill")
-                        .WithOne("Character")
-                        .HasForeignKey("Telvee32.BlackscarsSheetsSwtor.UI.Entities.Character", "SkillId");
-
                     b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Models.ApplicationUser", "User")
                         .WithMany("Characters")
                         .HasForeignKey("UserId");

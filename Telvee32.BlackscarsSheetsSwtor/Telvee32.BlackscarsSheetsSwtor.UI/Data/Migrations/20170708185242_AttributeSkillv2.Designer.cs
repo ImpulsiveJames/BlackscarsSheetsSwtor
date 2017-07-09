@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Telvee32.BlackscarsSheetsSwtor.UI.Data;
-using Telvee32.BlackscarsSheetsSwtor.UI.Models;
 
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170708185242_AttributeSkillv2")]
+    partial class AttributeSkillv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -153,19 +153,13 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AgeYears");
-
                     b.Property<int?>("AttributeId");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Nickname");
 
-                    b.Property<int>("Rank");
-
                     b.Property<int?>("SkillId");
-
-                    b.Property<string>("Species");
 
                     b.Property<string>("UserId");
 
