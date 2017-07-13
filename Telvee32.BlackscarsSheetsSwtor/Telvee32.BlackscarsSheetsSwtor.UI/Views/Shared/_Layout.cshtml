@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Telvee32.BlackscarsSheetsSwtor.UI</title>
+    <title>@ViewData["Title"] - Blackscars Character Sheets</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -28,23 +28,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Telvee32.BlackscarsSheetsSwtor.UI</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Blackscars Character Sheets (SWTOR)</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Character <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Character" asp-action="MyCharacters">My characters</a></li>
+                            <li><a asp-area="" asp-controller="Character" asp-action="Create">New character</a></li>
+                            <li><a asp-area="" asp-controller="Character" asp-action="All">All characters</a></li>
+                        </ul>
+                    </li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>                    
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
+    <div style="background-color: #ee9a17; text-align:center"><strong>ALPHA</strong></div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - Telvee32.BlackscarsSheetsSwtor.UI</p>
+            <p>&copy; 2017 - Telvee32</p>
         </footer>
     </div>
 

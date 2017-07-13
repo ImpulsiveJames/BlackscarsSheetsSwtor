@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using Telvee32.BlackscarsSheetsSwtor.UI.Models;
 
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Entities
@@ -14,20 +14,25 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Entities
 
         public string Nickname { get; set; }
 
-        [ForeignKey("AttributeId")]
         public Attribute Attribute { get; set; }
 
-        [ForeignKey("SkillId")]
         public Skill Skill { get; set; }
 
+        [Display(Name = "Age (years)")]
         public int AgeYears { get; set; }
 
         public string Species { get; set; }
+
+        public string Homeworld { get; set; }
+
+        public Rank Rank { get; set; }
 
         public int Perception => 1 + 1;
 
         public int Initiative => 1 + 1;
 
-        public Rank Rank { get; set; }
+        public bool Completed { get; set; }
+
+        public bool Approved { get; set; }
     }
 }

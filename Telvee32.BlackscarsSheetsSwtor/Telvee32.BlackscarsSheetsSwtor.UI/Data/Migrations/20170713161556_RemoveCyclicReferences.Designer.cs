@@ -9,9 +9,10 @@ using Telvee32.BlackscarsSheetsSwtor.UI.Models;
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170713161556_RemoveCyclicReferences")]
+    partial class RemoveCyclicReferences
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -160,8 +161,6 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
                     b.Property<int?>("AttributeId");
 
                     b.Property<bool>("Completed");
-
-                    b.Property<string>("Homeworld");
 
                     b.Property<string>("Name");
 

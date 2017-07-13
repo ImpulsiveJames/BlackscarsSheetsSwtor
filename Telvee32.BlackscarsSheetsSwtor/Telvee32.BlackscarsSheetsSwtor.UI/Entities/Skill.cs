@@ -6,8 +6,6 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Entities
     {
         public int Id { get; set; }
 
-        public Character Character { get; set; }
-
         [Display(Name = "Animal Ken")]
         public int AnimalKen { get; set; }
 
