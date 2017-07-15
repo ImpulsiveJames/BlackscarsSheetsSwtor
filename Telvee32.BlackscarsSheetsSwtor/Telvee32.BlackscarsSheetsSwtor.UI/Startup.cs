@@ -52,6 +52,7 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddScoped<ISheetsRepository, SheetsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +75,8 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 

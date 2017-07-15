@@ -1,0 +1,243 @@
+@model Telvee32.BlackscarsSheetsSwtor.UI.Models.CharacterViewModels.CharacterSheetViewModel
+
+@{
+    ViewData["Title"] = $"Character Sheet for {Model.Character.Nickname}";
+}
+
+<h2>Character sheet for @Model.Character.Name&nbsp;(@Model.Character.Nickname)</h2>
+<hr />
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Basic info</div>
+                <div class="panel-body">
+                    @Html.ActionLink("Edit basic info", "BasicInfo", "Character", new { characterId = Model.Character.Id })
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Nickname)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Nickname)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.AgeYears)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.AgeYears)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Species)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Species)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Homeworld)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Homeworld)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Rank)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Rank)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Completed)
+                        </dt>
+                        <dd>
+                            @(Model.Character.Completed ? "Yes" : "No")
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Approved)
+                        </dt>
+                        <dd>
+                            @(Model.Character.Approved ? "Yes" : "No")
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-education"></span>&nbsp;Attributes</div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Intelligence)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Intelligence)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Willpower)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Willpower)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Dexterity)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Dexterity)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Charisma)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Charisma)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Wits)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Wits)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Strength)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Strength)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Attribute.Stamina)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Attribute.Stamina)
+                        </dd>
+                        <hr />
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Health)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Health)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Perception)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Perception)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Initiative)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Initiative)
+                        </dd>                        
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-book"></span>&nbsp;Skills</div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.AnimalKen)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.AnimalKen)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Athletics)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Athletics)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Brawling)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Brawling)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Firearms)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Firearms)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Interrogation)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Interrogation)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Larceny)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Larceny)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Mechanics)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Mechanics)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Medicine)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Medicine)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.HeavyOrdnance)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.HeavyOrdnance)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Persuasion)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Persuasion)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Piloting)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Piloting)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Slicing)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Slicing)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Stealth)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Stealth)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Survival)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Survival)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(m => m.Character.Skill.Weaponry)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(m => m.Character.Skill.Weaponry)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

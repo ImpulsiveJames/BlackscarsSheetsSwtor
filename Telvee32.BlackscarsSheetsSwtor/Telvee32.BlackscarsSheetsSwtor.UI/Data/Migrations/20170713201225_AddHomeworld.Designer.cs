@@ -9,9 +9,10 @@ using Telvee32.BlackscarsSheetsSwtor.UI.Models;
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170713201225_AddHomeworld")]
+    partial class AddHomeworld
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -161,27 +162,19 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 
                     b.Property<bool>("Completed");
 
-                    b.Property<string>("Homeworld")
-                        .IsRequired();
+                    b.Property<string>("Homeworld");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
-                    b.Property<string>("Nickname")
-                        .IsRequired();
-
-                    b.Property<bool>("OtherInformation")
-                        .HasMaxLength(1000);
+                    b.Property<string>("Nickname");
 
                     b.Property<int>("Rank");
 
                     b.Property<int?>("SkillId");
 
-                    b.Property<string>("Species")
-                        .IsRequired();
+                    b.Property<string>("Species");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -333,8 +326,7 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Data.Migrations
 
                     b.HasOne("Telvee32.BlackscarsSheetsSwtor.UI.Models.ApplicationUser", "User")
                         .WithMany("Characters")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
         }
     }

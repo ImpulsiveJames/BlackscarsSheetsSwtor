@@ -1,0 +1,48 @@
+@model int
+@{
+    ViewData["Title"] = "Error";
+}
+
+@{ 
+    var statusCode = Model;
+    var message = "";
+
+    switch (statusCode)
+    {
+        case 400:
+        {
+            message = "Bad request";
+            break;
+        }
+        case 403:
+        {
+            message = "Forbidden.";
+            break;
+        }
+        case 404:
+        {
+            message = "Not found.";
+            break;
+        }
+        case 408:
+        {
+            message = "Server timed out.";
+            break;
+        }
+        case 500:
+        {
+            message = "Telvee32 rolled several 1s yet again and the server fell over.";
+            break;
+        }
+        default:
+        {
+            message = "Unexpected error.";
+            break;
+        }
+    }
+}
+
+<div class="jumbotron">
+    <h1>Error @Model</h1>
+    <h3>@message</h3>
+</div>

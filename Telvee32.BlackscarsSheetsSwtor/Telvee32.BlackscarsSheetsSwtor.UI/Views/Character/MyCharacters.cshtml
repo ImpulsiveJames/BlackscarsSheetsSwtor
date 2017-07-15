@@ -1,0 +1,48 @@
+@model Telvee32.BlackscarsSheetsSwtor.UI.Models.CharacterViewModels.MyCharactersViewModel
+
+@{
+    ViewData["Title"] = "My Characters";
+}
+
+<h2>My Characters</h2>
+<hr />
+
+@for(int i = 0; i < Model.Characters.Count; i++)
+{
+    <div>
+        <div class="row">
+            <h4>@Model.Characters[i].Nickname</h4>
+            @Html.ActionLink("Go to sheet", "Sheet", "Character", new { characterId = Model.Characters[i].Id })
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Characters[i].Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Characters[i].Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Characters[i].Nickname)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Characters[i].Nickname)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Characters[i].Completed)
+                </dt>
+                <dd>
+                    @(Model.Characters[i].Completed ? "Yes" : "No")
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Characters[i].Approved)
+                </dt>
+                <dd>
+                    @(Model.Characters[i].Approved ? "Yes" : "No")
+                </dd>
+            </dl>
+        </div>
+    </div>
+}
+<div>
+    <a asp-action="Index">TODO</a>
+</div>
+
