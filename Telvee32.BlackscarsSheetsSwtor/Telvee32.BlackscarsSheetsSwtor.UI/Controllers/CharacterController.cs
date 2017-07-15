@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Telvee32.BlackscarsSheetsSwtor.UI.Data;
 using Telvee32.BlackscarsSheetsSwtor.UI.Entities;
@@ -28,14 +27,6 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("/Character/{characterId}")]
-        public IActionResult Index(Guid characterId)
-        {
-            return RedirectToAction("Sheet", new { characterId = characterId });
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
         public IActionResult All(string userId = null)
         {
             throw new NotImplementedException();
@@ -53,6 +44,7 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("/Characters/{username}")]
         public async Task<IActionResult> Characters(string username)
         {
             // redirect to MyCharacters if username is current logged-in user
@@ -72,32 +64,44 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var user = await GetCurrentUserAsync();
-            var character = new Character
-            {
-                Id = Guid.NewGuid(),
-                User = user,
-                Name = "Default name",
-                Nickname = "Default nickname",
-                Species = "Default species"
-            };
-            character.Attribute = new Attribute
-            {
-                Intelligence = 1,
-                Willpower = 1,
-                Dexterity = 1,
-                Charisma = 1,
-                Wits = 1,
-                Strength = 1,
-                Stamina = 1
-            };
-            character.Skill = new Skill();
+            return View(new BasicInfoViewModel(new Character()));
+        }
 
-            _repository.AddOrUpdateCharacter(character);
+        [HttpPost]
+        public async Task<IActionResult> Create(BasicInfoViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
 
-            return RedirectToAction("BasicInfo", new { characterId = character.Id });
+                var character = new Character
+                {
+                    Id = Guid.NewGuid(),
+                    User = user,
+                    Name = viewModel.Name,
+                    Nickname = viewModel.Nickname,
+                    Species = viewModel.Species == "Other" ? viewModel.CustomSpecies : viewModel.Species,
+                    Attribute = new Attribute
+                    {
+                        Intelligence = 1,
+                        Willpower = 1,
+                        Dexterity = 1,
+                        Charisma = 1,
+                        Wits = 1,
+                        Strength = 1,
+                        Stamina = 1
+                    },
+                    Skill = new Skill()
+                };
+
+                _repository.AddOrUpdateCharacter(character);
+
+                return RedirectToAction("Sheet", new { characterId = character.Id });
+            }
+
+            return View(viewModel);
         }
 
         // step 1
@@ -112,36 +116,48 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
         // step 1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BasicInfo(BasicInfoViewModel viewModel)
+        [Route("/Character/{characterId}/BasicInfo")]
+        public IActionResult BasicInfo(BasicInfoViewModel viewModel)
         {
-            // validate - IValidatableObject perhaps or just data annotations
             if (viewModel.Id == Guid.Empty)
             {
                 throw new InvalidOperationException("Character ID not present.");
             }
 
-            var user = await GetCurrentUserAsync();
-            var dbCharacter = _repository.GetCharacter(viewModel.Id);
+            if (ModelState.IsValid)
+            {
+                var dbCharacter = _repository.GetCharacter(viewModel.Id);
 
-            if (dbCharacter == null) return NotFound();
+                if (dbCharacter == null) return NotFound();
 
-            if (user.Id != dbCharacter.User.Id) return Unauthorized();
+                if (!IsCharacterEditAuthorised(dbCharacter)) return Unauthorized();
 
-            dbCharacter.Name = viewModel.Name;
-            dbCharacter.Nickname = viewModel.Nickname;
-            dbCharacter.AgeYears = viewModel.AgeYears;
-            dbCharacter.Species = viewModel.Species;
-            dbCharacter.Homeworld = viewModel.Homeworld;
-            dbCharacter.Rank = viewModel.Rank;
+                dbCharacter.Name = viewModel.Name;
+                dbCharacter.Nickname = viewModel.Nickname;
+                dbCharacter.AgeYears = viewModel.AgeYears;
+                dbCharacter.Species = viewModel.Species == "Other" ? viewModel.CustomSpecies : viewModel.Species;
+                dbCharacter.Homeworld = viewModel.Homeworld;
+                dbCharacter.Rank = viewModel.Rank;
 
-            _repository.AddOrUpdateCharacter(dbCharacter);
+                _repository.AddOrUpdateCharacter(dbCharacter);
 
-            return RedirectToAction("Sheet", new { characterId = viewModel.Id });
+                return RedirectToAction("Sheet", new { characterId = viewModel.Id });
+            }
+
+            return View("EditBasicInfo", viewModel);
+        }
+
+        // API used for Vue.js app
+        [HttpGet]
+        [Route("/Character/api/{characterId}")]
+        public IActionResult Get(Guid characterId)
+        {
+            throw new NotImplementedException();
         }
 
         // step 2
         [HttpGet]
-        public IActionResult Attributes(Guid characterId)
+        public IActionResult SkillsAndAttributes(Guid characterId)
         {
             throw new NotImplementedException();
         }
@@ -149,22 +165,7 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
         // step 2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Attributes(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        // step 3
-        [HttpGet]
-        public IActionResult Skills(Guid characterId)
-        {
-            throw new NotImplementedException();
-        }
-
-        // step 3
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Skills(int id)
+        public IActionResult SkillsAndAttributes(int id)
         {
             throw new NotImplementedException();
         }
@@ -174,8 +175,10 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
         }
 
-        private bool IsCharacterEditAuthorised(Character character, ApplicationUser currentUser)
-        {            
+        private bool IsCharacterEditAuthorised(Character character)
+        {
+            var currentUser = GetCurrentUserAsync().Result;
+
             return character.User.Id == currentUser.Id;
         }
     }

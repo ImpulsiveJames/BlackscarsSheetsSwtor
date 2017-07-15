@@ -6,19 +6,26 @@ using Telvee32.BlackscarsSheetsSwtor.UI.Entities;
 
 namespace Telvee32.BlackscarsSheetsSwtor.UI.Models.CharacterViewModels
 {
-    public class BasicInfoViewModel
+    public class BasicInfoViewModel : IValidatableObject
     {
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Nickname { get; set; }
 
         [Display(Name = "Age (years)")]
+        [Required]
         public int AgeYears { get; set; }
 
+        [Required]
         public string Species { get; set; }
 
+        public string CustomSpecies { get; set; }
+
+        [Required]
         public string Homeworld { get; set; }
 
         public Rank Rank { get; set; }
@@ -33,67 +40,62 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Models.CharacterViewModels
             Name = character.Name;
             Nickname = character.Nickname;
             AgeYears = character.AgeYears;
-            Species = character.Species;
             Rank = character.Rank;
+            Homeworld = character.Homeworld;
+
+            if (SpeciesList.Contains(character.Species))
+            {
+                Species = character.Species;
+            }
+            else
+            {
+                CustomSpecies = character.Species;
+                Species = "Other";
+            }
         }
 
-        public List<SelectListItem> SpeciesDropdown => new List<SelectListItem>
+        public List<SelectListItem> SpeciesDropdown
         {
-            new SelectListItem
+            get
             {
-                Text = "Cathar",
-                Value = "Cathar"
-            },
-            new SelectListItem
-            {
-                Text = "Chiss",
-                Value = "Chiss"
-            },
-            new SelectListItem
-            {
-                Text = "Cyborg",
-                Value = "Cyborg"
-            },
-            new SelectListItem
-            {
-                Text = "Human",
-                Value = "Human"
-            },
-            new SelectListItem
-            {
-                Text = "Miraluka",
-                Value = "Miraluka"
-            },
-            new SelectListItem
-            {
-                Text = "Mirialan",
-                Value = "Mirialan"
-            },
-            new SelectListItem
-            {
-                Text = "Rattataki",
-                Value = "Rattataki"
-            },
-            new SelectListItem
-            {
-                Text = "Sith",
-                Value = "Sith"
-            },
-            new SelectListItem
-            {
-                Text = "Twi'lek",
-                Value = "Twi'lek"
-            },
-            new SelectListItem
-            {
-                Text = "Togruta",
-                Value = "Togruta"
-            },
-            new SelectListItem
-            {
-                Text = "Zabrak",
-                Value = "Zabrak"
+                var list = new List<SelectListItem>();
+
+                foreach(var species in SpeciesList)
+                {
+                    list.Add(new SelectListItem
+                    {
+                        Text = species,
+                        Value = species
+                    });
+                }
+
+                list.Add(new SelectListItem
+                {
+                    Text = "Other (please specify)",
+                    Value = "Other"
+                });
+
+                return list;
             }
+        }
+
+        public static List<string> SpeciesList = new List<string>
+        {
+            "Cathar", "Chiss", "Cyborg", "Human", "Miraluka", "Mirialan", "Rattataki", "Sith",
+            "Twi'lek", "Togruta", "Zabrak"
         };
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(Species == "Other" && string.IsNullOrEmpty(CustomSpecies))
+            {
+                yield return new ValidationResult("Please enter a species.", new[] { nameof(CustomSpecies) });
+            }
+
+            if(Rank == Rank.Undefined)
+            {
+                yield return new ValidationResult("Please select a rank.", new[] { nameof(Rank) });
+            }
+        }
     }
 }
