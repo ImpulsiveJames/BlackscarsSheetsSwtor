@@ -82,6 +82,7 @@ namespace Telvee32.BlackscarsSheetsSwtor.UI.Controllers
                     User = user,
                     Name = viewModel.Name,
                     Nickname = viewModel.Nickname,
+                    Homeworld = viewModel.Nickname,
                     Species = viewModel.Species == "Other" ? viewModel.CustomSpecies : viewModel.Species,
                     Attribute = new Attribute
                     {
